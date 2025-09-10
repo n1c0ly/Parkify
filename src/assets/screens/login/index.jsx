@@ -1,9 +1,10 @@
-import {LoginContainer} from './styles';
+import { LoginContainer } from './styles';
+import {Text} from 'react-native';
 
 export default function Login() {
-    return(
+    return (
         <LoginContainer>
-            Login
+            <Text>Login Screen</Text>
         </LoginContainer>
     )
 }

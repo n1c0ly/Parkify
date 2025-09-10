@@ -1,7 +1,8 @@
 import styled from "styled-components/native";
 
-const LoginContainer = styled.View`
-    flex: 1;
+export const LoginContainer = styled.View`
+ display: 'flex';
+ flex-direction: row;
     justify-content: center;
     align-items: center;
     background-color: 'blue';
