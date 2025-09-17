@@ -13,7 +13,7 @@ export default function Cadastro() {
     align-items: center;
     justify-content: start;
     background-color: #FFE8FB;
-    padding-top: 30px;
+    padding-top: 40px;
     `
   const SparkleImage = styled.Image`
   width: 50px;
@@ -63,7 +63,7 @@ justify-content: center;
   const Jpc = styled.Text`
 font-size: 14px;
 color: #8629B2;
-padding-top: 15px;
+padding-top: 30px;
 display: flex;
 align-items: center;
 padding-bottom: 20px;
@@ -144,9 +144,9 @@ font-weight: bold;
         <Labels>E-mail</Labels>
         <Inputs placeholder='Digite seu e-mail:' />
         <Labels>Senha</Labels>
-        <Inputs placeholder='Digite sua senha:' />
+        <Inputs placeholder='digite sua senha:' />
         <EnterButton>
-          <EnterButtonText>Cadastrar</EnterButtonText>
+          <EnterButtonText>Entrar</EnterButtonText>
         </EnterButton>
 
         <FooterImageView>

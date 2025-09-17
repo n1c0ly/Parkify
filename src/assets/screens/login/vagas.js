@@ -1,13 +1,13 @@
-import {StatusBar} from 'expo-status-bar';
-import {useState} from 'react';
-import {Text, View, Image} from 'react-native';
-import {LoginContainer} from './styles';
+import { StatusBar } from 'expo-status-bar';
+import { useState } from 'react';
+import { Text, View, Image } from 'react-native';
+import { LoginContainer } from './styles';
 import styled from 'styled-components';
 
 export default function Vagas() {
-   const Container = styled.View`
+
+    const Container = styled.View`
     flex: 1;
-    display: flex;
     align-items: center;
     justify-content: start;
     background-color: #FFE8FB;
@@ -29,16 +29,17 @@ export default function Vagas() {
   display: flex;
   justify-content: center;
   align-items: center;
-  
   `
-//
 
-return (
-    <Container>
-      <SparkleImage source={require('../../images/Sparkles.png')} />
-      <Tittle>Vagas</Tittle>
-    </Container>
-  );
-  //oiiii
+    //
+
+    return (
+        <Container>
+            <SparkleImage source={require('../../images/Sparkles.png')} />
+            <Tittle>Vagas</Tittle>
+        </Container>
+    );
+
+
 
 }
