@@ -11,9 +11,9 @@ export default function Cadastro() {
     flex: 1;
     display: flex;
     align-items: center;
-    justify-content: start;
+    justify-content: center;
     background-color: #FFE8FB;
-    padding-top: 40px;
+  
     `
   const SparkleImage = styled.Image`
   width: 50px;
@@ -30,6 +30,7 @@ export default function Cadastro() {
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: './src/assets/fonts/ParkifyFonts';
   
   `
 
