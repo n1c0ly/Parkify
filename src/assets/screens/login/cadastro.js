@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
 import { Text, View, Image, TouchableOpacity } from 'react-native';
 // import Login from './src/assets/screens/login';
-import { LoginContainer } from './login/styles';
+import { LoginContainer } from './styles';
 import styled from 'styled-components';
 
 export default function Cadastro() {
@@ -132,7 +132,7 @@ font-weight: bold;
       <StatusBar hidden />
 
       <LoginContainer>
-     <SparkleImage source={require('../images/Sparkles.png')} />
+     <SparkleImage source={require('../../images/Sparkles.png')} />
         <Tittle>Parkify</Tittle>
         <SubTittle>Estacionamento 24H</SubTittle>
         <JpcLinkView>
@@ -151,7 +151,7 @@ font-weight: bold;
         </EnterButton>
 
         <FooterImageView>
-          <FooterImage source={require('../images/FooterImage.png')} />
+          <FooterImage source={require('../../images/FooterImage.png')} />
         </FooterImageView>
       </LoginContainer>
 

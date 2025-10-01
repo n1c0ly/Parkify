@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import {ScrollView,Modal,TextInput,TouchableOpacity,Text,
-} from "react-native";
+import {ScrollView,Modal,TextInput,TouchableOpacity,Text,} from "react-native";
+
 import styled from "styled-components/native";
 
 function Vaga({ numero, status, ocupada, onPress }) {
@@ -17,9 +17,11 @@ function Vaga({ numero, status, ocupada, onPress }) {
   );
 }
 
+
+
 export default function App() {
   const [vagas, setVagas] = useState([
-    { numero: "01", status: "Jaj757", ocupada: true },
+    { numero: "01", status: "AAA1111", ocupada: true },
     { numero: "02", status: "BBB-2222", ocupada: true },
     { numero: "03", status: "Livre", ocupada: false },
     { numero: "04", status: "CCC-3333", ocupada: true },
@@ -145,7 +147,7 @@ const VagaBox = styled.View`
   padding: 15px;
   border-radius: 20px;
   margin-bottom: 12px;
-  elevation: 3;
+  elevation: 5;
 `;
 
 const Numero = styled.Text`
