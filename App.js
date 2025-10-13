@@ -2,7 +2,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Cadastro from "./src/assets/screens/login/cadastro";
 import Login from "./src/assets/screens/login/telaLogin";
 import Vagas from "./src/assets/screens/login/vagas";
-import Cep from "./src/assets/screens/cep/index";
+// import Cep from "./src/assets/screens/cep/index";
 import { createStaticNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useFonts } from "expo-font";
@@ -10,10 +10,10 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet } from "react-native";
 
 const RootStack = createNativeStackNavigator({
-  initialRouteName: 'Log',
+  initialRouteName: 'Est',
   screenOptions: {headerShown: false},
   screens: {
-    Log: Cep,
+    Log: Login,
     Cad: Cadastro,
     Est: Vagas
   },

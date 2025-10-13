@@ -20,10 +20,16 @@
         "foregroundImage": "",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.n1c0ls.Parkify"
     },
     "web": {
       "favicon": ""
+    },
+    "extra": {
+      "eas": {
+        "projectId": "03044840-f38f-45dc-adfb-232a60358d76"
+      }
     }
   }
 }

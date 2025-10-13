@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-import {ScrollView,Modal,TextInput,TouchableOpacity,Text,} from "react-native";
-
+import { ScrollView, Modal, TextInput, TouchableOpacity, Text, Alert } from "react-native";
 import styled from "styled-components/native";
 
 function Vaga({ numero, status, ocupada, onPress }) {
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity
+      onPress={onPress}
+      activeOpacity={1} 
+      style={{ borderRadius: 20 }}
+    >
       <VagaBox>
         <Numero>{numero}</Numero>
         <Status ocupada={ocupada}>{status}</Status>
@@ -17,20 +20,21 @@ function Vaga({ numero, status, ocupada, onPress }) {
   );
 }
 
-
-
 export default function App() {
+  const horaAtual = () =>
+    new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
+
   const [vagas, setVagas] = useState([
-    { numero: "01", status: "AAA1111", ocupada: true },
-    { numero: "02", status: "BBB-2222", ocupada: true },
-    { numero: "03", status: "Livre", ocupada: false },
-    { numero: "04", status: "CCC-3333", ocupada: true },
-    { numero: "05", status: "Livre", ocupada: false },
-    { numero: "06", status: "Jaj757", ocupada: true },
-    { numero: "07", status: "BBB-2222", ocupada: true },
-    { numero: "08", status: "Livre", ocupada: false },
-    { numero: "09", status: "CCC-3333", ocupada: true },
-    { numero: "10", status: "Livre", ocupada: false },
+    { numero: "01", status: "AAA1111", ocupada: true, dataHora: horaAtual() },
+    { numero: "02", status: "BBB-2222", ocupada: true, dataHora: horaAtual() },
+    { numero: "03", status: "Livre", ocupada: false, dataHora: horaAtual() },
+    { numero: "04", status: "CCC-3333", ocupada: true, dataHora: horaAtual() },
+    { numero: "05", status: "Livre", ocupada: false, dataHora: horaAtual() },
+    { numero: "06", status: "Jaj757", ocupada: true, dataHora: horaAtual() },
+    { numero: "07", status: "BBB-2222", ocupada: true, dataHora: horaAtual() },
+    { numero: "08", status: "Livre", ocupada: false, dataHora: horaAtual() },
+    { numero: "09", status: "CCC-3333", ocupada: true, dataHora: horaAtual() },
+    { numero: "10", status: "Livre", ocupada: false, dataHora: horaAtual() },
   ]);
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -50,7 +54,12 @@ export default function App() {
   const adicionarCarro = () => {
     const novas = vagas.map((v) =>
       v.numero === vagaSelecionada.numero
-        ? { ...v, ocupada: true, status: placaInput || "SEM-PLACA" }
+        ? {
+            ...v,
+            ocupada: true,
+            status: placaInput || "SEM-PLACA",
+            dataHora: horaAtual(),
+          }
         : v
     );
     setVagas(novas);
@@ -58,13 +67,25 @@ export default function App() {
   };
 
   const retirarCarro = () => {
-    const novas = vagas.map((v) =>
-      v.numero === vagaSelecionada.numero
-        ? { ...v, ocupada: false, status: "Livre" }
-        : v
+    Alert.alert(
+      "Confirmar retirada",
+      "Tem certeza que deseja retirar o veículo desta vaga?",
+      [
+        { text: "Cancelar", style: "cancel" },
+        {
+          text: "Sim",
+          onPress: () => {
+            const novas = vagas.map((v) =>
+              v.numero === vagaSelecionada.numero
+                ? { ...v, ocupada: false, status: "Livre", dataHora: horaAtual() }
+                : v
+            );
+            setVagas(novas);
+            fecharModal();
+          },
+        },
+      ]
     );
-    setVagas(novas);
-    fecharModal();
   };
 
   return (
@@ -93,6 +114,7 @@ export default function App() {
                   <>
                     <SubTexto>Placa do veículo</SubTexto>
                     <Placa>{vagaSelecionada.status}</Placa>
+                    <SubTexto>Data e hora: {vagaSelecionada.dataHora}</SubTexto>
                     <BotaoAcao cor="red" onPress={retirarCarro}>
                       <TextoBotao>Retirar</TextoBotao>
                     </BotaoAcao>
@@ -120,7 +142,6 @@ export default function App() {
     </Container>
   );
 }
-
 
 const Container = styled.View`
   flex: 1;
@@ -236,7 +257,7 @@ const BotaoAcao = styled.TouchableOpacity`
   border-radius: 10px;
   margin-bottom: 15px;
   margin-top: 50px;
-  background-color: ${(props) => props.cor || "gray"};
+  background-color: ${(props) => props.cor || "red"};
 `;
 
 const TextoBotao = styled.Text`
