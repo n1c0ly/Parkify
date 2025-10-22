@@ -4,8 +4,11 @@ import { Text, View, Image, TouchableOpacity } from 'react-native';
 // import Login from './src/assets/screens/login';
 import { LoginContainer } from './styles';
 import styled from 'styled-components';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Cadastro() {
+
+  const navigation = useNavigation();
 
   const Container = styled.View`
     flex: 1;
@@ -136,7 +139,7 @@ font-weight: bold;
         <Tittle>Parkify</Tittle>
         <SubTittle>Estacionamento 24H</SubTittle>
         <JpcLinkView>
-          <Jpc>Já possui cadastro? <JpcLinkText>Fazer login</JpcLinkText></Jpc>                      
+          <Jpc  onPress ={()=> navigation.navigate("Log")}>Já possui cadastro? <JpcLinkText>Fazer login</JpcLinkText></Jpc>                      
           
         </JpcLinkView>
         <LoginTittle>Cadastro</LoginTittle>
@@ -146,8 +149,8 @@ font-weight: bold;
         <Inputs placeholder='Digite seu e-mail:' />
         <Labels>Senha</Labels>
         <Inputs placeholder='digite sua senha:' />
-        <EnterButton>
-          <EnterButtonText>Entrar</EnterButtonText>
+        <EnterButton onPress ={()=> navigation.navigate("Log")}>
+          <EnterButtonText>Cadastrar</EnterButtonText>
         </EnterButton>
 
         <FooterImageView>

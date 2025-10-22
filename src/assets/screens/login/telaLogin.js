@@ -3,14 +3,14 @@ import { useState } from 'react';
 import { Text, View, Image, TouchableOpacity } from 'react-native';
 import { LoginContainer } from './styles';
 import styled from 'styled-components';
+import { useNavigation } from '@react-navigation/native';
 
 
 export default function Login() {
-<<<<<<< HEAD
+
+  const navigation = useNavigation();
+
   const Container = styled.View`
-=======
-    const Container = styled.View`
->>>>>>> da9b08e37a9209f41f50d39736d050c0df584a9b
     flex: 1;
     display: flex;
     align-items: center;
@@ -18,22 +18,16 @@ export default function Login() {
     background-color: #FFE8FB;
     padding-top: 30px;
     `
-<<<<<<< HEAD
+
   const SparkleImage = styled.Image`
-=======
-    const SparkleImage = styled.Image`
->>>>>>> da9b08e37a9209f41f50d39736d050c0df584a9b
   width: 50px;
   height: 50px;
   display: flex;
   margin-right: auto;
   `
 
-<<<<<<< HEAD
+
   const Tittle = styled.Text`
-=======
-        const Tittle = styled.Text`
->>>>>>> da9b08e37a9209f41f50d39736d050c0df584a9b
     font-size: 48px;
     font-weight: bold;
     margin-top: -50px;
@@ -43,20 +37,15 @@ export default function Login() {
     align-items: center;
     `
 
-<<<<<<< HEAD
+
   const SubTittle = styled.Text`
-=======
-        const SubTittle = styled.Text`
->>>>>>> da9b08e37a9209f41f50d39736d050c0df584a9b
     font-size: 20px;
     font-family: 'Frankfurter Highlight Std Regular';
     `
 
-<<<<<<< HEAD
+
+
   const Labels = styled.Text`
-=======
-    const Labels = styled.Text`
->>>>>>> da9b08e37a9209f41f50d39736d050c0df584a9b
 font-size: 14px;
 width: 300px;
 display: flex;
@@ -67,11 +56,9 @@ color: #8629B2;
 font-weight: 900;
 `
 
-<<<<<<< HEAD
+
   const Inputs = styled.TextInput`
-=======
-    const Inputs = styled.TextInput`
->>>>>>> da9b08e37a9209f41f50d39736d050c0df584a9b
+
 width: 300px;
 height: 52px;
 margin-top: 10px;
@@ -81,13 +68,9 @@ background-color: #fff;
 display: flex;
 align-items: center;
 justify-content: center;
-
 `
-<<<<<<< HEAD
+
   const Npc = styled.Text`
-=======
-    const Npc = styled.Text`
->>>>>>> da9b08e37a9209f41f50d39736d050c0df584a9b
 font-size: 14px;
 color: #8629B2;
 padding-top: 15px;
@@ -96,105 +79,76 @@ align-items: center;
 padding-bottom: 20px;
 `
 
-<<<<<<< HEAD
+
   const NpcLink = styled.TouchableOpacity`
-=======
-    const NpcLink = styled.TouchableOpacity`
->>>>>>> da9b08e37a9209f41f50d39736d050c0df584a9b
 font-size: 14px;
 display: flex;
 
 `
 
-<<<<<<< HEAD
+
   const NpcLinkText = styled.Text`
-=======
-    const NpcLinkText = styled.Text`
->>>>>>> da9b08e37a9209f41f50d39736d050c0df584a9b
 font-size: 14px;
 text-decoration: underline;
 color: #5650FF;
 `
-<<<<<<< HEAD
+
   const NpcLinkView = styled.View`
   display: flex;
 `
 
   const LoginTittle = styled.Text`
-=======
-    const NpcLinkView = styled.View`
-  display: flex;
-`
 
-    const LoginTittle = styled.Text`
->>>>>>> da9b08e37a9209f41f50d39736d050c0df584a9b
+  
+
+
 font-size: 26px;
 font-weight: 350;
-color: #8629B2 ;
+color: #8629B2;
 width: 300px;
 font-family: 'Frankfurter Highlight Std Regular';
 `
 
-<<<<<<< HEAD
+
   const EnterButton = styled.TouchableOpacity`
-=======
-    const EnterButton = styled.TouchableOpacity`
->>>>>>> da9b08e37a9209f41f50d39736d050c0df584a9b
 width: 300px;
 height: 55px;
 background-color: #D979FF;
 border-radius: 10px;
 display: flex;
 align-items: center;
-justify-content: center;
+justify-content: center;                                
 margin-top: 20px;
-
 `
 
-<<<<<<< HEAD
+
   const EnterButtonText = styled.Text`
-=======
-    const EnterButtonText = styled.Text`
->>>>>>> da9b08e37a9209f41f50d39736d050c0df584a9b
 color: #fff;
 font-size: 18px;
 font-weight: bold;
 `
 
-<<<<<<< HEAD
+
   const EasLink = styled.TouchableOpacity`
   margin-top: 10px;
   `
 
   const EasLinkText = styled.Text`
-=======
-    const EasLink = styled.TouchableOpacity`
-  margin-top: 10px;
-  `
-
-    const EasLinkText = styled.Text`
->>>>>>> da9b08e37a9209f41f50d39736d050c0df584a9b
 color:#5650FF;
 width: 300px;
   text-decoration: underline;
   `
 
-<<<<<<< HEAD
+
   const FooterImageView = styled.View`
-=======
-    const FooterImageView = styled.View`
->>>>>>> da9b08e37a9209f41f50d39736d050c0df584a9b
   display: flex;
   align-items: center;
   justify-content: center;
 
   `
 
-<<<<<<< HEAD
+
   const FooterImage = styled.Image`
-=======
-    const FooterImage = styled.Image`
->>>>>>> da9b08e37a9209f41f50d39736d050c0df584a9b
   width: 300px;
   height: 270px;
   margin-top: 30px;
@@ -202,26 +156,16 @@ width: 300px;
 `
 
 
-
-<<<<<<< HEAD
-=======
-
-    return (
+  return (
         <Container>
             <StatusBar hidden />
->>>>>>> da9b08e37a9209f41f50d39736d050c0df584a9b
 
-  return (
-    <Container>
-      <StatusBar hidden />
-
-<<<<<<< HEAD
       <LoginContainer>
         <SparkleImage source={require('../../images/Sparkles.png')} />
         <Tittle>Parkify</Tittle>
         <SubTittle>Estacionamento 24H</SubTittle>
         <NpcLinkView>
-          <Npc>Não possui cadastro? <NpcLinkText>Clique aqui!</NpcLinkText></Npc>
+          <Npc onPress ={() => navigation.navigate("Cad")}>Não possui cadastro? <NpcLinkText>Clique aqui!</NpcLinkText></Npc>
 
         </NpcLinkView>
         <LoginTittle>Login</LoginTittle>
@@ -229,7 +173,7 @@ width: 300px;
         <Inputs placeholder='Digite seu e-mail:' />
         <Labels>Senha</Labels>
         <Inputs placeholder='Digite sua senha:' />
-        <EnterButton>
+        <EnterButton onPress ={() => navigation.navigate("Est")}>
           <EnterButtonText>Entrar</EnterButtonText>
         </EnterButton>
         <EasLink>
@@ -239,31 +183,9 @@ width: 300px;
           <FooterImage source={require('../../images/FooterImage.png')} />
         </FooterImageView>
       </LoginContainer>
-=======
-                </NpcLinkView>
-                <LoginTittle>Login</LoginTittle>
-                <Labels>E-mail</Labels>
-                <Inputs placeholder='Digite seu e-mail:' />
-                <Labels>Senha</Labels>
-                <Inputs placeholder='Digite sua senha:' />
-                <EnterButton>
-                    <EnterButtonText>Entrar</EnterButtonText>
-                </EnterButton>
-                <EasLink>
-                    <EasLinkText>Esqueci minha senha</EasLinkText>
-                </EasLink>
-                <FooterImageView>
-                    <FooterImage source={require('../../images/FooterImage.png')} />
-                </FooterImageView>
-            </LoginContainer>
->>>>>>> da9b08e37a9209f41f50d39736d050c0df584a9b
-
-
-    </Container>
+    </Container >
   );
 }
-<<<<<<< HEAD
 
 
-=======
->>>>>>> da9b08e37a9209f41f50d39736d050c0df584a9b
+

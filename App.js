@@ -10,7 +10,7 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet } from "react-native";
 
 const RootStack = createNativeStackNavigator({
-  initialRouteName: 'Est',
+  initialRouteName: 'Log',
   screenOptions: {headerShown: false},
   screens: {
     Log: Login,

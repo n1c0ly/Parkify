@@ -1,273 +1,277 @@
 import React, { useState } from "react";
-import { ScrollView, Modal, TextInput, TouchableOpacity, Text, Alert } from "react-native";
-import styled from "styled-components/native";
-
-function Vaga({ numero, status, ocupada, onPress }) {
-  return (
-    <TouchableOpacity
-      onPress={onPress}
-      activeOpacity={1} 
-      style={{ borderRadius: 20 }}
-    >
-      <VagaBox>
-        <Numero>{numero}</Numero>
-        <Status ocupada={ocupada}>{status}</Status>
-        <Botao>
-          <BotaoTexto>{ocupada ? "-" : "+"}</BotaoTexto>
-        </Botao>
-      </VagaBox>
-    </TouchableOpacity>
-  );
-}
+import { ScrollView, Modal, Alert, TouchableOpacity, Text, View, TextInput } from "react-native";
 
 export default function App() {
-  const horaAtual = () =>
-    new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
-
   const [vagas, setVagas] = useState([
-    { numero: "01", status: "AAA1111", ocupada: true, dataHora: horaAtual() },
-    { numero: "02", status: "BBB-2222", ocupada: true, dataHora: horaAtual() },
-    { numero: "03", status: "Livre", ocupada: false, dataHora: horaAtual() },
-    { numero: "04", status: "CCC-3333", ocupada: true, dataHora: horaAtual() },
-    { numero: "05", status: "Livre", ocupada: false, dataHora: horaAtual() },
-    { numero: "06", status: "Jaj757", ocupada: true, dataHora: horaAtual() },
-    { numero: "07", status: "BBB-2222", ocupada: true, dataHora: horaAtual() },
-    { numero: "08", status: "Livre", ocupada: false, dataHora: horaAtual() },
-    { numero: "09", status: "CCC-3333", ocupada: true, dataHora: horaAtual() },
-    { numero: "10", status: "Livre", ocupada: false, dataHora: horaAtual() },
+    { num: "01", placa: "JJK-0001", ocupada: true, hora: "08:30", modelo: "Sedan", cor: "Preto" },
+    { num: "02", placa: "BBB-2222", ocupada: true, hora: "09:10", modelo: "SUV", cor: "Branco" },
+    { num: "03", placa: "Livre", ocupada: false },
+    { num: "04", placa: "CCC-3333", ocupada: true, hora: "07:55", modelo: "Hatch", cor: "Prata" },
+    { num: "05", placa: "Livre", ocupada: false },
+    { num: "06", placa: "Livre", ocupada: false },
+    { num: "07", placa: "DDD-7777", ocupada: true, hora: "10:15", modelo: "Pickup", cor: "Azul" },
+    { num: "08", placa: "EEE-8888", ocupada: true, hora: "11:05", modelo: "SUV", cor: "Cinza" },
+    { num: "09", placa: "Livre", ocupada: false },
+    { num: "10", placa: "Livre", ocupada: false },
   ]);
 
-  const [modalVisible, setModalVisible] = useState(false);
-  const [vagaSelecionada, setVagaSelecionada] = useState(null);
-  const [placaInput, setPlacaInput] = useState("");
+  const [mostrar, setMostrar] = useState(false);
+  const [vagaAtiva, setVagaAtiva] = useState(null);
+  const [placa, setPlaca] = useState("");
+  const [modelo, setModelo] = useState("");
+  const [cor, setCor] = useState("");
+  const [hora, setHora] = useState("");
 
-  const abrirModal = (vaga) => {
-    setVagaSelecionada(vaga);
-    setModalVisible(true);
-  };
+  function abrir(v) {
+    setVagaAtiva(v);
+    setMostrar(true);
+  }
 
-  const fecharModal = () => {
-    setModalVisible(false);
-    setPlacaInput("");
-  };
+  function fechar() {
+    setMostrar(false);
+    setPlaca("");
+    setModelo("");
+    setCor("");
+    setHora("");
+  }
 
-  const adicionarCarro = () => {
+  function adicionar() {
+    if (!placa || !hora) {
+      Alert.alert("Erro", "Preencha a placa e o horário de entrada.");
+      return;
+    }
+
+    const novas = vagas.map((v) => {
+      if (v.num === vagaAtiva.num) {
+        return {
+          ...v,
+          ocupada: true,
+          placa: placa,
+          modelo: modelo || "Não informado",
+          cor: cor || "Não informado",
+          hora: hora,
+        };
+      }
+      return v;
+    });
+    setVagas(novas);
+    fechar();
+  }
+
+  function confirmarSaida() {
+    Alert.alert("Sair", "Deseja mesmo retirar o carro?", [
+      { text: "Cancelar", style: "cancel" },
+      { text: "Sim", onPress: sair },
+    ]);
+  }
+
+  function sair() {
     const novas = vagas.map((v) =>
-      v.numero === vagaSelecionada.numero
-        ? {
-            ...v,
-            ocupada: true,
-            status: placaInput || "SEM-PLACA",
-            dataHora: horaAtual(),
-          }
+      v.num === vagaAtiva.num
+        ? { ...v, ocupada: false, placa: "Livre", hora: null, modelo: null, cor: null }
         : v
     );
     setVagas(novas);
-    fecharModal();
-  };
-
-  const retirarCarro = () => {
-    Alert.alert(
-      "Confirmar retirada",
-      "Tem certeza que deseja retirar o veículo desta vaga?",
-      [
-        { text: "Cancelar", style: "cancel" },
-        {
-          text: "Sim",
-          onPress: () => {
-            const novas = vagas.map((v) =>
-              v.numero === vagaSelecionada.numero
-                ? { ...v, ocupada: false, status: "Livre", dataHora: horaAtual() }
-                : v
-            );
-            setVagas(novas);
-            fecharModal();
-          },
-        },
-      ]
-    );
-  };
+    fechar();
+  }
 
   return (
-    <Container>
-      <Titulo>VAGAS</Titulo>
+    <View style={{ flex: 1, backgroundColor: "#fff0fb", padding: 20, paddingTop: 40 }}>
+      <Text
+        style={{
+          fontSize: 45,
+          textAlign: "center",
+          fontWeight: "bold",
+          color: "#ff94dfff",
+          marginBottom: 25,
+        }}
+      >
+        Vagas
+      </Text>
+
       <ScrollView>
-        {vagas.map((vaga, i) => (
-          <Vaga
+        {vagas.map((v, i) => (
+          <TouchableOpacity
             key={i}
-            numero={vaga.numero}
-            status={vaga.status}
-            ocupada={vaga.ocupada}
-            onPress={() => abrirModal(vaga)}
-          />
+            onPress={() => abrir(v)}
+            style={{
+              backgroundColor: v.ocupada ? "#f5a6e0" : "#f382d5ff",
+              borderRadius: 15,
+              padding: 15,
+              marginBottom: 12,
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              shadowColor: "#000",
+              shadowOpacity: 0.1,
+             
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 24,
+                color: "#fff",
+                fontWeight: "bold",
+                textShadowColor: "#0002",
+                textShadowRadius: 2,
+              }}
+            >
+              {v.num}
+            </Text>
+            <Text
+              style={{
+                flex: 1,
+                textAlign: "center",
+                color: v.ocupada ? "#fff" : "#ffffffff",
+                fontWeight: "bold",
+                fontSize: 20,
+              }}
+            >
+              {v.placa}
+            </Text>
+            <View
+              style={{
+                backgroundColor: v.ocupada ? "#fde2faff" : "#e1f8deff",
+                borderRadius: 50,
+                width: 38,
+                height: 38,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 20,
+                  color: v.ocupada ? "#d63384" : "#2e8b57",
+                  fontWeight: "bold",
+                }}
+              >
+                {v.ocupada ? "-" : "+"}
+              </Text>
+            </View>
+          </TouchableOpacity>
         ))}
       </ScrollView>
 
-      <Modal visible={modalVisible} transparent animationType="fade">
-        <ModalFundo>
-          <ModalCard>
-            {vagaSelecionada && (
+    
+      <Modal visible={mostrar} transparent={true} animationType="fade">
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: "rgba(0,0,0,0.4)",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <View
+            style={{
+              width: "90%",
+              backgroundColor: "#ffe6f9",
+              borderRadius: 20,
+              padding: 25,
+              alignItems: "center",
+            }}
+          >
+            {vagaAtiva && (
               <>
-                <ModalTitulo>Vaga {vagaSelecionada.numero}</ModalTitulo>
+                <Text
+                  style={{
+                    fontSize: 28,
+                    fontWeight: "bold",
+                    color: "#c24be0",
+                    marginBottom: 10,
+                  }}
+                >
+                  Vaga {vagaAtiva.num}
+                </Text>
 
-                {vagaSelecionada.ocupada ? (
+                {vagaAtiva.ocupada ? (
                   <>
-                    <SubTexto>Placa do veículo</SubTexto>
-                    <Placa>{vagaSelecionada.status}</Placa>
-                    <SubTexto>Data e hora: {vagaSelecionada.dataHora}</SubTexto>
-                    <BotaoAcao cor="red" onPress={retirarCarro}>
-                      <TextoBotao>Retirar</TextoBotao>
-                    </BotaoAcao>
+                    <Text style={{ fontSize: 16, marginBottom: 5 }}>Placa: {vagaAtiva.placa}</Text>
+                    <Text style={{ fontSize: 16, marginBottom: 5 }}>Modelo: {vagaAtiva.modelo}</Text>
+                    <Text style={{ fontSize: 16, marginBottom: 5 }}>Cor: {vagaAtiva.cor}</Text>
+                    <Text style={{ fontSize: 16, marginBottom: 15 }}>
+                      Entrada: {vagaAtiva.hora}
+                    </Text>
+
+                    <TouchableOpacity
+                      style={{
+                        backgroundColor: "red",
+                        paddingVertical: 10,
+                        borderRadius: 8,
+                        width: 180,
+                        alignItems: "center",
+                        marginBottom: 10,
+                      }}
+                      onPress={confirmarSaida}
+                    >
+                      <Text style={{ color: "#fff", fontWeight: "bold" }}>Retirar</Text>
+                    </TouchableOpacity>
                   </>
                 ) : (
                   <>
-                    <SubTexto>Nenhum veículo registrado.</SubTexto>
-                    <Input
-                      placeholder="Digite a placa"
-                      value={placaInput}
-                      onChangeText={setPlacaInput}
+                    <Text style={{ fontSize: 16, marginBottom: 10 }}>Registrar carro</Text>
+                    <TextInput
+                      placeholder="Placa"
+                      style={estilos.input}
+                      value={placa}
+                      onChangeText={setPlaca}
                     />
-                    <BotaoAcao cor="green" onPress={adicionarCarro}>
-                      <TextoBotao>Adicionar</TextoBotao>
-                    </BotaoAcao>
+                    <TextInput
+                      placeholder="Modelo"
+                      style={estilos.input}
+                      value={modelo}
+                      onChangeText={setModelo}
+                    />
+                    <TextInput
+                      placeholder="Cor"
+                      style={estilos.input}
+                      value={cor}
+                      onChangeText={setCor}
+                    />
+                    <TextInput
+                      placeholder="Horário (ex: 14:30)"
+                      style={estilos.input}
+                      value={hora}
+                      onChangeText={setHora}
+                    />
+
+                    <TouchableOpacity
+                      style={{
+                        backgroundColor: "green",
+                        paddingVertical: 10,
+                        borderRadius: 8,
+                        width: 180,
+                        alignItems: "center",
+                      }}
+                      onPress={adicionar}
+                    >
+                      <Text style={{ color: "#fff", fontWeight: "bold" }}>Adicionar</Text>
+                    </TouchableOpacity>
                   </>
                 )}
 
-                <Cancelar onPress={fecharModal}>Cancelar</Cancelar>
+                <TouchableOpacity onPress={fechar}>
+                  <Text style={{ color: "#c24be0", marginTop: 15, fontSize: 16 }}>Cancelar</Text>
+                </TouchableOpacity>
               </>
             )}
-          </ModalCard>
-        </ModalFundo>
+          </View>
+        </View>
       </Modal>
-    </Container>
+    </View>
   );
 }
 
-const Container = styled.View`
-  flex: 1;
-  background-color: #ffe8fb;
-  padding: 20px;
-  padding-top: 50px;
-`;
-
-const Titulo = styled.Text`
-  font-size: 52px;
-  font-weight: bold;
-  text-align: center;
-  padding: 15px;
-  border-radius: 20px;
-  margin-bottom: 20px;
-  text-shadow: 1px 1px 10px #fff;
-`;
-
-const VagaBox = styled.View`
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  background-color: #f5a6e0;
-  padding: 15px;
-  border-radius: 20px;
-  margin-bottom: 12px;
-  elevation: 5;
-`;
-
-const Numero = styled.Text`
-  font-size: 30px;
-  font-weight: bold;
-  color: #fff;
-`;
-
-const Status = styled.Text`
-  font-size: 18px;
-  flex: 1;
-  text-align: center;
-  color: #fff;
-  font-weight: bold;
-`;
-
-const Botao = styled.View`
-  background-color: #ffccf9;
-  border-radius: 50px;
-  width: 40px;
-  height: 40px;
-  align-items: center;
-  justify-content: center;
-`;
-
-const BotaoTexto = styled.Text`
-  font-size: 20px;
-  font-weight: bold;
-  color: #d63384;
-`;
-
-const ModalFundo = styled.View`
-  flex: 1;
-  background-color: rgba(0, 0, 0, 0.4);
-  justify-content: center;
-  align-items: center;
-`;
-
-const ModalCard = styled.View`
-  width: 90%;
-  height: 60%;
-  background-color: #ffe6f9;
-  border-radius: 20px;
-  padding: 100px;
-  align-items: center;
-  margin-top: auto;
-`;
-
-const ModalTitulo = styled.Text`
-  font-size: 40px;
-  font-weight: bold;
-  color: #c24be0;
-  margin-bottom: 50px;
-`;
-
-const SubTexto = styled.Text`
-  font-size: 18px;
-  color: #444;
-  margin-bottom: 10px;
-  width: 400px;
-  text-align: center;
-`;
-
-const Placa = styled.Text`
-  font-size: 30px;
-  font-weight: bold;
-  color: #a600a6;
-  margin-bottom: 20px;
-`;
-
-const Input = styled.TextInput`
-  border-width: 1px;
-  border-color: #aaa;
-  border-radius: 10px;
-  padding: 10px;
-  margin-bottom: 20px;
-  width: 200px;
-  text-align: center;
-`;
-
-const BotaoAcao = styled.TouchableOpacity`
-  height: 52px;
-  width: 200px;
-  align-items: center;
-  justify-content: center;
-  border-radius: 10px;
-  margin-bottom: 15px;
-  margin-top: 50px;
-  background-color: ${(props) => props.cor || "red"};
-`;
-
-const TextoBotao = styled.Text`
-  color: #fff;
-  font-size: 18px;
-  font-weight: bold;
-`;
-
-const Cancelar = styled.Text`
-  color: #c24be0;
-  font-size: 16px;
-  margin-top: 5px;
-`;
+const estilos = {
+  input: {
+    borderWidth: 1,
+    borderColor: "#aaa",
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: 10,
+    width: 220,
+    textAlign: "center",
+    backgroundColor: "#fff",
+  },
+};
